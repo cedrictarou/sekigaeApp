@@ -33,16 +33,17 @@ clearBtn.addEventListener('click', ()=>{
 });
 
 function clear() {
-  
-  while(ul.firstChild) {
-    ul.removeChild(ul.firstChild);
-  }
+ ul.innerHTML = '';
 }
+
 // セットアップ　席を作成する
 function setup() {
   shuffledStudents.forEach((studentNum) => {
     const li = document.createElement('li');
     ul.appendChild(li);
+    li.dataset.toggle = 'tooltip';
+    li.dataset.placement = 'top';
+    li.title = 'Click to change the gender.';
     const status = ['boy', 'girl'];
     let statusBoy = false;
     li.classList.add(status[0]);
@@ -61,15 +62,29 @@ function setup() {
 
 function random() {
   const lists = document.querySelectorAll('li');
-  lists.forEach(list => {
-    if(list.classList.contains('boy')) {
-      list.innerHTML += `<div>${shuffledBoys[0]}</div>`;
-      shuffledBoys.shift();
-    } else {
-      list.innerHTML += `<div>${shuffledGirls[0]}</div>`;
-      shuffledGirls.shift();  
-    }
-  });
+    lists.forEach(list => {
+      // クラスにboyが付いている場合
+      if(list.classList.contains('boy')) {
+        // shuffledBoysが空なのかどうか判定
+          if(shuffledBoys[0] !== undefined) {
+          list.innerHTML += `<div>${shuffledBoys[0]}</div>`;
+          shuffledBoys.shift();
+        } else { //shuffledBoysが空なら×を表示する
+          list.innerHTML += `<div>×</div>`;
+        }
+      }
+      // クラスにgirlが付いている場合
+      if(list.classList.contains('girl')) {
+        // shuffledgirlsが空なのかどうか判定
+          if(shuffledGirls[0] !== undefined) {
+          list.innerHTML += `<div>${shuffledGirls[0]}</div>`;
+          shuffledGirls.shift();
+        } else { //shuffledGirlsが空なら×を表示する
+          list.innerHTML += `<div>×</div>`;
+        }
+      }
+    });
+
 }
 function clearText() {
   const lists = document.querySelectorAll('li');
@@ -91,4 +106,7 @@ function shuffleArray(sourceArr) {
   return array;
 }
 
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 }
