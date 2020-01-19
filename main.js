@@ -1,32 +1,26 @@
 'use strict'
 {
-const setupBtn = document.getElementById('setup');  const randomBtn = document.getElementById('random');
+const setupBtn = document.getElementById('setup'); const randomBtn = document.getElementById('random');
 const clearBtn = document.getElementById('clear');
 const ul = document.querySelector('ul');
+const studentsNumInput = document.getElementById('studentsNum');
 
-const studentsArray = [
-  {id: 1, gender: 'girl'},
-  {id: 2, gender: 'boy'},
-  {id: 3, gender: 'girl'},
-  {id: 4, gender: 'boy'},
-  {id: 5, gender: 'girl'},
-  {id: 6, gender: 'boy'},
-  {id: 7, gender: 'girl'},
-  {id: 8, gender: 'boy'},
-  {id: 9, gender: 'girl'},
-  {id: 10, gender: 'boy'},
-];
-
+let studentsArray = [];
+// ページが読み込まれた時のdefault設定を作成
+generateStudents();
 const girls = studentsArray.filter((student) => student.gender === 'girl');
-console.log(girls);
+
 const boys = studentsArray.filter((student) => student.gender === 'boy');
-console.log(boys);
+
 const students =[...boys,...girls];
 let shuffledBoys = shuffleArray(boys);
 let shuffledGirls = shuffleArray(girls);
 let shuffledStudents = shuffleArray(students);
 
-
+//生徒の数を入れた時の変化をチェックする処理
+studentsNumInput.addEventListener('change', () => {
+  generateStudents(studentsNum);
+});
 // ページが読み込まれた時のsetup
 setupBtn.addEventListener('click', ()=>{
   clear();
@@ -46,6 +40,25 @@ randomBtn.addEventListener('click', ()=>{
 clearBtn.addEventListener('click', ()=>{
   clear();
 });
+
+//生徒情報を作成する関数
+function generateStudents() {
+  const studentsNum = studentsNumInput.value;
+  studentsArray = [];
+  for( let i = 1; i <= studentsNum; i++) {
+    // 性別をランダムに決める為の配列
+    const genders = [ "boy", "girl" ] ;
+    // 性別をランダムに決める処理
+    const gender = genders[ Math.floor( Math.random() * genders.length ) ] ;
+    //生徒のオブジェクトを動的に生成する
+    const student = {
+      id: i,
+      gender,
+    }
+    studentsArray.push(student);
+  }
+  return studentsArray;
+}
 
 function clear() {
  ul.innerHTML = '';
