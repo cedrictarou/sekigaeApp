@@ -4,8 +4,23 @@ const setupBtn = document.getElementById('setup');  const randomBtn = document.g
 const clearBtn = document.getElementById('clear');
 const ul = document.querySelector('ul');
 
-const boys = [1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35];
-const girls = [2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34];
+const studentsArray = [
+  {id: 1, gender: 'girl'},
+  {id: 2, gender: 'boy'},
+  {id: 3, gender: 'girl'},
+  {id: 4, gender: 'boy'},
+  {id: 5, gender: 'girl'},
+  {id: 6, gender: 'boy'},
+  {id: 7, gender: 'girl'},
+  {id: 8, gender: 'boy'},
+  {id: 9, gender: 'girl'},
+  {id: 10, gender: 'boy'},
+];
+
+const girls = studentsArray.filter((student) => student.gender === 'girl');
+console.log(girls);
+const boys = studentsArray.filter((student) => student.gender === 'boy');
+console.log(boys);
 const students =[...boys,...girls];
 let shuffledBoys = shuffleArray(boys);
 let shuffledGirls = shuffleArray(girls);
@@ -38,7 +53,7 @@ function clear() {
 
 // セットアップ　席を作成する
 function setup() {
-  shuffledStudents.forEach((studentNum) => {
+  shuffledStudents.forEach(() => {
     const li = document.createElement('li');
     ul.appendChild(li);
     li.dataset.toggle = 'tooltip';
@@ -67,7 +82,7 @@ function random() {
       if(list.classList.contains('boy')) {
         // shuffledBoysが空なのかどうか判定
           if(shuffledBoys[0] !== undefined) {
-          list.innerHTML += `<div>${shuffledBoys[0]}</div>`;
+          list.innerHTML += `<div>${ shuffledBoys[0].id }</div>`;
           shuffledBoys.shift();
         } else { //shuffledBoysが空なら×を表示する
           list.innerHTML += `<div>×</div>`;
@@ -77,7 +92,7 @@ function random() {
       if(list.classList.contains('girl')) {
         // shuffledgirlsが空なのかどうか判定
           if(shuffledGirls[0] !== undefined) {
-          list.innerHTML += `<div>${shuffledGirls[0]}</div>`;
+          list.innerHTML += `<div>${ shuffledGirls[0].id }</div>`;
           shuffledGirls.shift();
         } else { //shuffledGirlsが空なら×を表示する
           list.innerHTML += `<div>×</div>`;
