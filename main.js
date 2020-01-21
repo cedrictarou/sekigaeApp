@@ -8,18 +8,23 @@ const studentsNumInput = document.getElementById('studentsNum');
 let studentsArray = [];
 // ページが読み込まれた時のdefault設定を作成
 generateStudents();
-const girls = studentsArray.filter((student) => student.gender === 'girl');
+let girls = studentsArray.filter((student) => student.gender === 'girl');
 
-const boys = studentsArray.filter((student) => student.gender === 'boy');
+let boys = studentsArray.filter((student) => student.gender === 'boy');
 
-const students =[...boys,...girls];
+let students =[...boys,...girls];
 let shuffledBoys = shuffleArray(boys);
 let shuffledGirls = shuffleArray(girls);
 let shuffledStudents = shuffleArray(students);
 
 //生徒の数を入れた時の変化をチェックする処理
-studentsNumInput.addEventListener('change', () => {
-  generateStudents(studentsNum);
+studentsNumInput.addEventListener('change', (event) => {
+  generateStudents(event.target.value);
+  // 各変数の値の更新
+    girls = studentsArray.filter((student) => student.gender === 'girl');
+    boys = studentsArray.filter((student) => student.gender === 'boy');
+    students =[...boys,...girls];
+    shuffledStudents = shuffleArray(students);
 });
 // ページが読み込まれた時のsetup
 setupBtn.addEventListener('click', ()=>{
@@ -33,6 +38,7 @@ randomBtn.addEventListener('click', ()=>{
   clearText();
   shuffledBoys = shuffleArray(boys);
   shuffledGirls = shuffleArray(girls);
+  shuffledStudents = shuffleArray(students);
   random();
 });
 
