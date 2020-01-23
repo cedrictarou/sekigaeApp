@@ -74,13 +74,16 @@ function setup() {
     const li = document.createElement('li');
     const status = ['boy', 'girl'];
     let statusBoy = false;
-
     ul.appendChild(li);
     li.dataset.toggle = 'tooltip';
     li.dataset.placement = 'top';
     li.title = 'Click to change the gender.';
     li.classList.add(status[0]);
-  //クリックするごとにboyかgirlのクラスを与える
+    //ツールチップ処理
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    });
+    //クリックするごとにboyかgirlのクラスを与える
     li.addEventListener('click', () => {
       if (statusBoy) {
         li.classList.replace('girl', 'boy');
@@ -137,7 +140,4 @@ function shuffleArray(sourceArr) {
   return array;
 }
 
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
 }
