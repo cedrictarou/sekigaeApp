@@ -79,10 +79,6 @@ function setup() {
     li.dataset.placement = 'top';
     li.title = 'Click to change the gender.';
     li.classList.add(status[0]);
-    //ツールチップ処理
-    $(function () {
-      $('[data-toggle="tooltip"]').tooltip()
-    });
     //クリックするごとにboyかgirlのクラスを与える
     li.addEventListener('click', () => {
       if (statusBoy) {
@@ -94,6 +90,10 @@ function setup() {
       }
     });
   });
+  //ツールチップ処理
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  });
 }
 
 function random() {
@@ -102,7 +102,7 @@ function random() {
       // クラスにboyが付いている場合
       if(list.classList.contains('boy')) {
         // shuffledBoysが空なのかどうか判定
-        if(shuffledBoys[0] !== undefined) {
+        if(shuffledBoys.length > 0) {
           list.innerHTML += `<div>${ shuffledBoys[0].id }</div>`;
           shuffledBoys.shift();
         } else { //shuffledBoysが空なら×を表示する
@@ -112,7 +112,7 @@ function random() {
       // クラスにgirlが付いている場合
       if(list.classList.contains('girl')) {
         // shuffledgirlsが空なのかどうか判定
-          if(shuffledGirls[0] !== undefined) {
+          if(shuffledGirls.length > 0) {
           list.innerHTML += `<div>${ shuffledGirls[0].id }</div>`;
           shuffledGirls.shift();
         } else { //shuffledGirlsが空なら×を表示する
