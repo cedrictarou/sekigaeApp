@@ -1,17 +1,15 @@
 'use strict'
 {
-const setupBtn = document.getElementById('setup'); const randomBtn = document.getElementById('random');
+const setupBtn = document.getElementById('setup'); 
+const randomBtn = document.getElementById('random');
 const clearBtn = document.getElementById('clear');
 const ul = document.querySelector('ul');
 const studentsNumInput = document.getElementById('studentsNum');
-
 let studentsArray = [];
 // ページが読み込まれた時のdefault設定を作成
 generateStudents();
 let girls = studentsArray.filter((student) => student.gender === 'girl');
-
 let boys = studentsArray.filter((student) => student.gender === 'boy');
-
 let students =[...boys,...girls];
 let shuffledBoys = shuffleArray(boys);
 let shuffledGirls = shuffleArray(girls);
@@ -21,10 +19,10 @@ let shuffledStudents = shuffleArray(students);
 studentsNumInput.addEventListener('change', (event) => {
   generateStudents(event.target.value);
   // 各変数の値の更新
-    girls = studentsArray.filter((student) => student.gender === 'girl');
-    boys = studentsArray.filter((student) => student.gender === 'boy');
-    students =[...boys,...girls];
-    shuffledStudents = shuffleArray(students);
+  girls = studentsArray.filter((student) => student.gender === 'girl');
+  boys = studentsArray.filter((student) => student.gender === 'boy');
+  students =[...boys,...girls];
+  shuffledStudents = shuffleArray(students);
 });
 // ページが読み込まれた時のsetup
 setupBtn.addEventListener('click', ()=>{
@@ -67,21 +65,25 @@ function generateStudents() {
 }
 
 function clear() {
- ul.innerHTML = '';
+  ul.innerHTML = '';
 }
 
 // セットアップ　席を作成する
 function setup() {
   shuffledStudents.forEach(() => {
     const li = document.createElement('li');
+    const status = ['boy', 'girl'];
+    let statusBoy = false;
     ul.appendChild(li);
     li.dataset.toggle = 'tooltip';
     li.dataset.placement = 'top';
     li.title = 'Click to change the gender.';
-    const status = ['boy', 'girl'];
-    let statusBoy = false;
     li.classList.add(status[0]);
-  //クリックするごとにboyかgirlのクラスを与える
+    //ツールチップ処理
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    });
+    //クリックするごとにboyかgirlのクラスを与える
     li.addEventListener('click', () => {
       if (statusBoy) {
         li.classList.replace('girl', 'boy');
@@ -100,7 +102,7 @@ function random() {
       // クラスにboyが付いている場合
       if(list.classList.contains('boy')) {
         // shuffledBoysが空なのかどうか判定
-          if(shuffledBoys[0] !== undefined) {
+        if(shuffledBoys[0] !== undefined) {
           list.innerHTML += `<div>${ shuffledBoys[0].id }</div>`;
           shuffledBoys.shift();
         } else { //shuffledBoysが空なら×を表示する
@@ -123,9 +125,7 @@ function random() {
 function clearText() {
   const lists = document.querySelectorAll('li');
   lists.forEach((list) => {
-    while(list.firstChild) {
-      list.removeChild(list.firstChild);
-    }
+    list.innerHTML = '';
   });
 }
 
@@ -140,7 +140,4 @@ function shuffleArray(sourceArr) {
   return array;
 }
 
-$(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
 }
